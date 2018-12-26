@@ -9,9 +9,9 @@ import java.util.stream.IntStream;
 public class Year2015Day02 {
 
     public static void main(String[] args) {
-        String input = InputReader.readInput("201502");
+        var input = InputReader.readInput("201502");
 
-        BigWrapper bigWrapper = new BigWrapper();
+        var bigWrapper = new BigWrapper();
         new Scanner(input).forEachRemaining(bigWrapper);
         System.out.println(bigWrapper.wrapSurface);
         System.out.println(bigWrapper.ribbonLength);
@@ -24,8 +24,8 @@ public class Year2015Day02 {
 
         @Override
         public void accept(String s) {
-            String[] split = s.split("x");
-            Rectangle rectangle = new Rectangle(split);
+            var splitString = s.split("x");
+            var rectangle = new Rectangle(splitString);
             wrapSurface += rectangle.calculateSurface() + rectangle.calculateSmallestSideSurface();
             ribbonLength += rectangle.calculateRibbonLength() + rectangle.calculateVolume();
         }
@@ -53,8 +53,7 @@ public class Year2015Day02 {
             }
 
             private int calculateRibbonLength() {
-                int[] smallestSides = IntStream.of(x, y, z).sorted().limit(2).toArray();
-                return smallestSides[0] * 2 + smallestSides[1] * 2;
+                return IntStream.of(x, y, z).sorted().limit(2).reduce(0, (smallest, mid) -> smallest + mid) * 2;
             }
 
         }
